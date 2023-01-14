@@ -27,6 +27,7 @@ function onInput(event) {
 
   fetchCountries(userQuery)
     .then(data => {
+      console.log(data);
       item = data;
       render();
 
@@ -51,9 +52,9 @@ function onInput(event) {
     );
 }
 
-function getInfoCountry({ name, population, capital, flags }) {
+function getInfoCountry({ name: { official }, population, capital, flags }) {
   const lang = Object.values(item[0].languages).join(', ');
-  return `<div><img src=${flags.svg} alt="flag"/><h2>Population: ${population}</h2><h2>Capital: ${capital}</h2><h2>Languages: ${lang}</h2></div>`;
+  return `<div><img src=${flags.svg} alt="flag"/><h2>Country: ${official}</h2><h2>Population: ${population}</h2><h2>Capital: ${capital}</h2><h2>Languages: ${lang}</h2></div>`;
 }
 
 function createList() {
@@ -66,9 +67,4 @@ function createInfo() {
   const markup = item.map(getInfoCountry);
   render();
   countryInfo.insertAdjacentHTML('beforeend', markup.join(''));
-}
-
-function ifError() {
-  render();
-  Notiflix.Notify.failure('Oops, there is no country with that name.');
 }
