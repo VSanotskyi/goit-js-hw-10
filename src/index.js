@@ -46,7 +46,9 @@ function onInput(event) {
         createList();
       }
     })
-    .catch(ifError);
+    .catch(err =>
+      Notiflix.Notify.failure('Oops, there is no country with that name.')
+    );
 }
 
 function getInfoCountry({ name, population, capital, flags }) {
